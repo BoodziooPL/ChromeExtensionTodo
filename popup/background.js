@@ -11,14 +11,14 @@ let arr = []
 const setTasks = () => {
   let values = inputValue.value
   arr.push(values)
-  if (localStorage.getItem(0) == null) {
-    localStorage.setItem(0, JSON.stringify(arr))
+  if (localStorage.getItem('myTask') == null) {
+    localStorage.setItem('myTask', JSON.stringify(arr))
   } else {
     let newArr = []
     newArr.push(values)
-    let uploadArr = JSON.parse(localStorage.getItem(0)).concat(newArr)
+    let uploadArr = JSON.parse(localStorage.getItem('myTask')).concat(newArr)
 
-    localStorage.setItem(0, JSON.stringify(uploadArr))
+    localStorage.setItem('myTask', JSON.stringify(uploadArr))
   }
   addTasktoPopup()
 }
@@ -30,7 +30,7 @@ const createAndPushElements = () => {
   const divTool = document.createElement('div')
   const btnComplete = document.createElement('button')
   const btnDelete = document.createElement('button')
-  listItem.innerHTML = JSON.parse(localStorage.getItem(0))[i]
+  listItem.innerHTML = JSON.parse(localStorage.getItem('myTask'))[i]
   // adding class Lists and btn value
   divWrapper.classList.add('toolsTask')
   listItem.classList.add('data-task')
@@ -46,14 +46,14 @@ const createAndPushElements = () => {
 }
 
 const addTasktoPopup = () => {
-  let localStorageLength = JSON.parse(localStorage.getItem(0)).length
+  let localStorageLength = JSON.parse(localStorage.getItem('myTask')).length
   for (i = localStorageLength - 1; i < localStorageLength; i++) {
     createAndPushElements()
   }
 }
 
 if (localStorage.length > 0 == true) {
-  let localStorageLength = JSON.parse(localStorage.getItem(0)).length
+  let localStorageLength = JSON.parse(localStorage.getItem('myTask')).length
   for (i = 0; i < localStorageLength; i++) {
     createAndPushElements()
   }
@@ -63,12 +63,22 @@ tools.addEventListener('click', (e) => {
   if (e.target.classList.contains('delete')) {
     e.target.closest('.toolsTask').remove()
   }
-  let btns = document.querySelectorAll('.delete')
-  let numBtn = btns.map((bnt) =>
-    btns.addEventListener('click', (e) => {
-      console.log(e.target.id)
-    })
-  )
+})
+
+let btns = document.querySelectorAll('.delete')
+btns.forEach((item, index) => {
+  item.addEventListener('click', () => {
+    let arrJson = JSON.parse(localStorage.getItem('myTask'))
+    console.log(index)
+    console.log(arrJson)
+    arrJson.splice(index)
+    console.log(arrJson)
+    if (arrJson.length < 1) {
+      localStorage.removeItem('myTask')
+    } else {
+      localStorage.setItem('myTask', JSON.stringify(arrJson))
+    }
+  })
 })
 
 btnTask.addEventListener('click', setTasks)
