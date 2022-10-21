@@ -59,26 +59,20 @@ if (localStorage.length > 0 == true) {
   }
 }
 
-tools.addEventListener('click', (e) => {
-  if (e.target.classList.contains('delete')) {
-    e.target.closest('.toolsTask').remove()
-  }
-})
-
 let btns = document.querySelectorAll('.delete')
 btns.forEach((item, index) => {
   item.addEventListener('click', () => {
     let arrJson = JSON.parse(localStorage.getItem('myTask'))
-    console.log(index)
-    console.log(arrJson)
-    arrJson.splice(index)
-    console.log(arrJson)
-    if (arrJson.length < 1) {
-      localStorage.removeItem('myTask')
-    } else {
-      localStorage.setItem('myTask', JSON.stringify(arrJson))
-    }
+    arrJson.splice(index, 1)
+    localStorage.setItem('myTask', JSON.stringify(arrJson))
+    console.log(arrJson.length)
   })
+})
+
+tools.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete')) {
+    e.target.closest('.toolsTask').remove()
+  }
 })
 
 btnTask.addEventListener('click', setTasks)
