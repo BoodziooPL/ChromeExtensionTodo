@@ -64,8 +64,11 @@ btns.forEach((item, index) => {
   item.addEventListener('click', () => {
     let arrJson = JSON.parse(localStorage.getItem('myTask'))
     arrJson.splice(index, 1)
-    localStorage.setItem('myTask', JSON.stringify(arrJson))
-    console.log(arrJson.length)
+    if (arrJson.length < 1) {
+      localStorage.clear()
+    } else {
+      localStorage.setItem('myTask', JSON.stringify(arrJson))
+    }
   })
 })
 // remove task
@@ -74,7 +77,7 @@ tools.addEventListener('click', (e) => {
     e.target.closest('.toolsTask').remove()
   }
   if (e.target.classList.contains('complete')) {
-    e.target.closest('.toolsTask').classList.add('submited')
+    e.target.closest('.toolsTask').classList.toggle('submited')
   }
 })
 
