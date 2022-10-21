@@ -71,6 +71,11 @@ body {
   font-size: 15px;
 }
 
+.submited {
+  color: var(--submit-color);
+  text-decoration: line-through;
+}
+
 .toolsTask {
   display: flex;
   width: 50%;

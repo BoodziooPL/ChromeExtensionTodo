@@ -51,14 +51,14 @@ const addTasktoPopup = () => {
     createAndPushElements()
   }
 }
-
+// Pushing every tasks from locale to PopUp
 if (localStorage.length > 0 == true) {
   let localStorageLength = JSON.parse(localStorage.getItem('myTask')).length
   for (i = 0; i < localStorageLength; i++) {
     createAndPushElements()
   }
 }
-
+// variable with btns loaded over and update Task
 let btns = document.querySelectorAll('.delete')
 btns.forEach((item, index) => {
   item.addEventListener('click', () => {
@@ -68,10 +68,13 @@ btns.forEach((item, index) => {
     console.log(arrJson.length)
   })
 })
-
+// remove task
 tools.addEventListener('click', (e) => {
   if (e.target.classList.contains('delete')) {
     e.target.closest('.toolsTask').remove()
+  }
+  if (e.target.classList.contains('complete')) {
+    e.target.closest('.toolsTask').classList.add('submited')
   }
 })
 
